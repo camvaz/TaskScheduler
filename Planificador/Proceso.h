@@ -23,8 +23,12 @@ public:
 	bool comparacionPEDESC(Proceso&);
 	bool comparacionEPDESC(Proceso&);
 	uint32 getLlegada();
+	uint32 getUejecucion();
 	bool ejecuta();
 	void print();
+	bool operator==(Proceso&);
 	bool operator=(Proceso);
+	void agregaTiempoFinal(uint32&);
+	void setTiempoFinal();
 	~Proceso();
 };

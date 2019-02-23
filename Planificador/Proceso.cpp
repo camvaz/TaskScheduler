@@ -69,6 +69,11 @@ uint32 Proceso::getLlegada()
 	return t_Lle;
 }
 
+uint32 Proceso::getUejecucion()
+{
+	return unidadesEjecucion;
+}
+
 bool Proceso::ejecuta()
 {
 	if (--unidadesEjecucion)
@@ -78,6 +83,11 @@ bool Proceso::ejecuta()
 
 void Proceso::print() {
 	cout << "\nPID: " << pid << "\nPrioridad: " << Prioridad << "\nTiempo de ejecucion: " << t_Exe << "\nTiempo de espera: " << t_Esp << endl;
+}
+
+bool Proceso::operator==(Proceso &tmp)
+{
+	return this->pid == tmp.pid;
 }
 
 bool Proceso::operator=(Proceso tmp)
@@ -90,6 +100,16 @@ bool Proceso::operator=(Proceso tmp)
 	this->t_Fin = tmp.t_Fin;
 	this->unidadesEjecucion = tmp.unidadesEjecucion;
 	return 1;
+}
+
+void Proceso::agregaTiempoFinal(uint32 &tfin)
+{
+	t_Fin = tfin;
+}
+
+void Proceso::setTiempoFinal()
+{
+	t_Esp = t_Fin - t_Lle - t_Exe;
 }
 
 

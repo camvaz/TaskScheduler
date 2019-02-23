@@ -4,6 +4,8 @@ class Planner
 	vector<Proceso>		Tabla;
 	vector<Proceso>		Lista;
 	uint32				contador, numProcesos, canales;
+	void				ejecuta();
+	bool				keepExecuting();
 	
 public:
 	Planner();
@@ -17,7 +19,10 @@ public:
 	void Lista_ordenaEPASC();
 	void Lista_ordenaPEDESC();
 	void Lista_ordenaEPDESC();
-	void ejecuta();
+
+	void eliminaCeros(uint32&);
+	void agregaListaMonotarea(uint32&);
+	void runMonotarea();
 	~Planner();
 };
 

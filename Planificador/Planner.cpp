@@ -21,10 +21,6 @@ void Planner::addProceso(Proceso nuevo)
 	vector<Proceso>::iterator i;
 	i = Tabla.end();
 	this->Tabla.insert(i, nuevo);
-	if ((int)nuevo.getLlegada() == 0) {
-		i = Lista.end();
-		this->Lista.insert(i, nuevo);
-	}
 }
 
 void Planner::llenaLista(uint32 &tiempo)
@@ -113,12 +109,61 @@ void Planner::Lista_ordenaEPDESC()
 	}
 }
 
+bool Planner::keepExecuting()
+{
+	for (vector<Proceso>::iterator i = Tabla.begin(); i != Tabla.end(); ++i) {
+		if (i->getUejecucion() != 0) {
+			return true;
+		}
+	}
+	return false;
+}
+
 void Planner::ejecuta()
 {
-	for (uint32 i = 0; i < canales; ++i) {
-		Lista[i].ejecuta();
+	for (vector<Proceso>::iterator i = Lista.begin(); i != Lista.end(); ++i) {
+		if (i->getUejecucion() > 0) {
+			i->ejecuta();
+		} 
 	}
 }
+
+void Planner::eliminaCeros(uint32& Fin)
+{
+	for (vector<Proceso>::iterator i = Lista.begin(); i != Lista.end(); ++i) {
+		if (i->getUejecucion() == 0) {
+			for (vector<Proceso>::iterator it = Tabla.begin(); it != Tabla.end(); ++it) {
+				if (*i == *it) {
+					it->agregaTiempoFinal(Fin);
+					it->setTiempoFinal();
+				}
+			}
+			Lista.erase(Lista.remove(Lista.begin(), Lista.end(),); //ARREGLAR EXCEPCION FUERA DE RANGO
+		}
+	}
+}
+
+void Planner::agregaListaMonotarea(uint32 &i)
+{
+	for (vector<Proceso>::iterator it = Tabla.begin(); it != Tabla.end(); ++it) {
+		if (it->getLlegada() == i) {
+			Lista.insert(Lista.end(), *it);
+		}
+	}
+}
+
+void Planner::runMonotarea()
+{
+	uint32 uExe = 0;
+	while (keepExecuting()) {
+		eliminaCeros(uExe);
+		agregaListaMonotarea(uExe);
+		Lista_ordenaPEASC();
+		ejecuta();
+		++uExe;
+	}
+}
+
 
 
 Planner::~Planner()

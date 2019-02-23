@@ -15,9 +15,8 @@ int main()
 	planification.addProceso(p4);
 	planification.addProceso(p5);
 	
-	planification.printLista();
-	planification.Lista_ordenaPEDESC();
-	planification.printLista();
+	planification.runMonotarea();
+	planification.printTabla();
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
