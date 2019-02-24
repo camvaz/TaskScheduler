@@ -13,6 +13,7 @@ Planner::Planner(uint32 &&size, uint32&& newCanales): numProcesos(size), canales
 {
 	Tabla.reserve(size);
 	Lista.reserve(size);
+	ListaAEjecutar.reserve(newCanales);
 	contador = 0;
 }
 
@@ -53,7 +54,7 @@ void Planner::printTabla()
 	}
 }
 
-void Planner::Lista_ordenaPEASC(uint32 &i)
+void Planner::Lista_ordenaPEASC(uint32 &&i)
 {
 	Proceso temp;
 	for ( i = 0; i < Lista.size(); ++i) {
@@ -126,29 +127,28 @@ bool Planner::procesoTerminado(Proceso &i)
 
 void Planner::ejecuta()
 {
-	for (uint32 i = 0; i < canales; ++i) {
-		if (Lista[i].getUejecucion() > 0) {
-			Lista[i].ejecuta();
+	for (uint32 i = 0; i < ListaAEjecutar.size(); ++i) {
+		if (ListaAEjecutar[i].getUejecucion() > 0) {
+			ListaAEjecutar[i].ejecuta();
 		} 
 	}
 }
 
 void Planner::eliminaCeros(uint32& Fin)
 {
-	for (vector<Proceso>::iterator i = Lista.begin(); i != Lista.end(); ++i) {
+	for (vector<Proceso>::iterator i = ListaAEjecutar.begin(); i != ListaAEjecutar.end(); ++i) {
 		if (procesoTerminado(*i)) {
 			for (vector<Proceso>::iterator it = Tabla.begin(); it != Tabla.end(); ++it) {
 				if (*i == *it) {
 					it->agregaTiempoFinal(Fin);
 					it->setUejecucion(0);
-					it->setTiempoFinal();
-					
+					it->setTiempoFinal();	
 				}
 			}
 		}
 	}
 	Lista.erase(remove_if(Lista.begin(), Lista.end(), [](Proceso x) {return x.getUejecucion() == 0;}), Lista.end());
-	Lista_ordenaPEASC(canales);
+	ListaAEjecutar.erase(remove_if(ListaAEjecutar.begin(), ListaAEjecutar.end(), [](Proceso x) {return x.getUejecucion() == 0;}), ListaAEjecutar.end());
 }
 
 void Planner::agregaListaMonotarea(uint32 &i)
@@ -166,10 +166,14 @@ void Planner::runMonotarea()
 	while (keepExecuting()) {
 		eliminaCeros(uExe);
 		agregaListaMonotarea(uExe);
+		Lista_ordenaPEASC(0);
 
-		if (uExe == 0) {
-			Lista_ordenaPEASC(uExe);
-		}
+		if (this->ListaAEjecutar.size() < canales) {
+			for (uint32 i = ListaAEjecutar.size()-1; i < canales; ++i) {
+				this->ListaAEjecutar.insert(ListaAEjecutar.end(), Lista[i-1]);
+			}
+		} 
+	
 
 		ejecuta();
 		cout << uExe;

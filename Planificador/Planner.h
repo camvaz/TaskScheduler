@@ -3,6 +3,7 @@ class Planner
 {
 	vector<Proceso>		Tabla;
 	vector<Proceso>		Lista;
+	vector<Proceso>		ListaAEjecutar;
 	uint32				contador, numProcesos, canales;
 	void				ejecuta();
 	bool				keepExecuting();
@@ -16,7 +17,7 @@ public:
 	bool isEmpty();
 	void printLista();
 	void printTabla();
-	void Lista_ordenaPEASC(uint32&);
+	void Lista_ordenaPEASC(uint32&&);
 	void Lista_ordenaEPASC(uint32&);
 	void Lista_ordenaPEDESC(uint32&);
 	void Lista_ordenaEPDESC(uint32&);
