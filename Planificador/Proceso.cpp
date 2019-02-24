@@ -87,7 +87,7 @@ bool Proceso::ejecuta()
 }
 
 void Proceso::print() {
-	cout << "\nPID: " << pid << "\nPrioridad: " << Prioridad << "\nTiempo de ejecucion: " << t_Exe << "\nTiempo de llegada: " << t_Lle << "\nTiempo de espera: " << t_Esp << endl;
+	cout << "\nPID: " << pid << "\nPrioridad: " << Prioridad << "\nTiempo de ejecucion: " << t_Exe << "\nTiempo de llegada: " << t_Lle << "\nTiempo de espera: " << t_Esp  << "\nTiempo Final: " << t_Fin << endl;
 }
 
 bool Proceso::operator==(Proceso &tmp)
@@ -113,6 +113,7 @@ void Proceso::setObject(uint32 &&tllegada, uint32 &&texe, uint32 &&tp, uint32 &&
 	this->t_Exe = texe;
 	this->Prioridad = tp;
 	this->pid = npid;
+	this->unidadesEjecucion = texe;
 }
 
 void Proceso::agregaTiempoFinal(uint32 &tfin)

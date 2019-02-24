@@ -28,6 +28,9 @@ int main()
 	
 	planification.runMonotarea();
 	planification.printTabla();
+	cout << "\n";
+	planification.printLista();
+	cout << "n\n";
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

@@ -53,10 +53,10 @@ void Planner::printTabla()
 	}
 }
 
-void Planner::Lista_ordenaPEASC()
+void Planner::Lista_ordenaPEASC(uint32 &i)
 {
 	Proceso temp;
-	for (uint32 i = 0; i < Lista.size(); ++i) {
+	for ( i = 0; i < Lista.size(); ++i) {
 		for (uint32 j = i; j < Lista.size(); ++j) {
 			if (Lista[j].comparacionPEASC(Lista[i])) {
 				temp = Lista[j];
@@ -67,10 +67,10 @@ void Planner::Lista_ordenaPEASC()
 	}
 }
 
-void Planner::Lista_ordenaEPASC()
+void Planner::Lista_ordenaEPASC(uint32 &i)
 {
 	Proceso temp;
-	for (uint32 i = 0; i < Lista.size(); ++i) {
+	for ( i = 0; i < Lista.size(); ++i) {
 		for (uint32 j = i; j < Lista.size(); ++j) {
 			if (Lista[j].comparacionEPASC(Lista[i])) {
 				temp = Lista[j];
@@ -81,10 +81,10 @@ void Planner::Lista_ordenaEPASC()
 	}
 }
 
-void Planner::Lista_ordenaPEDESC()
+void Planner::Lista_ordenaPEDESC(uint32 &i)
 {
 	Proceso temp;
-	for (uint32 i = 0; i < Lista.size(); ++i) {
+	for (i = 0; i < Lista.size(); ++i) {
 		for (uint32 j = i; j < Lista.size(); ++j) {
 			if (Lista[j].comparacionPEDESC(Lista[i])) {
 				temp = Lista[j];
@@ -95,10 +95,10 @@ void Planner::Lista_ordenaPEDESC()
 	}
 }
 
-void Planner::Lista_ordenaEPDESC()
+void Planner::Lista_ordenaEPDESC(uint32 &i)
 {
 	Proceso temp;
-	for (uint32 i = 0; i < Lista.size(); ++i) {
+	for (i = 0; i < Lista.size(); ++i) {
 		for (uint32 j = i; j < Lista.size(); ++j) {
 			if (Lista[j].comparacionEPDESC(Lista[i])) {
 				temp = Lista[j];
@@ -126,9 +126,9 @@ bool Planner::procesoTerminado(Proceso &i)
 
 void Planner::ejecuta()
 {
-	for (vector<Proceso>::iterator i = Lista.begin(); i != Lista.end(); ++i) {
-		if (i->getUejecucion() > 0) {
-			i->ejecuta();
+	for (uint32 i = 0; i < canales; ++i) {
+		if (Lista[i].getUejecucion() > 0) {
+			Lista[i].ejecuta();
 		} 
 	}
 }
@@ -136,7 +136,7 @@ void Planner::ejecuta()
 void Planner::eliminaCeros(uint32& Fin)
 {
 	for (vector<Proceso>::iterator i = Lista.begin(); i != Lista.end(); ++i) {
-		if (i->getUejecucion() == 0) {
+		if (procesoTerminado(*i)) {
 			for (vector<Proceso>::iterator it = Tabla.begin(); it != Tabla.end(); ++it) {
 				if (*i == *it) {
 					it->agregaTiempoFinal(Fin);
@@ -148,6 +148,7 @@ void Planner::eliminaCeros(uint32& Fin)
 		}
 	}
 	Lista.erase(remove_if(Lista.begin(), Lista.end(), [](Proceso x) {return x.getUejecucion() == 0;}), Lista.end());
+	Lista_ordenaPEASC(canales);
 }
 
 void Planner::agregaListaMonotarea(uint32 &i)
@@ -165,8 +166,13 @@ void Planner::runMonotarea()
 	while (keepExecuting()) {
 		eliminaCeros(uExe);
 		agregaListaMonotarea(uExe);
-		Lista_ordenaPEASC();
+
+		if (uExe == 0) {
+			Lista_ordenaPEASC(uExe);
+		}
+
 		ejecuta();
+		cout << uExe;
 		++uExe;
 	}
 
