@@ -6,6 +6,7 @@ class Planner
 	uint32				contador, numProcesos, canales;
 	void				ejecuta();
 	bool				keepExecuting();
+	bool				procesoTerminado(Proceso&);
 	
 public:
 	Planner();

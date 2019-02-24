@@ -6,14 +6,25 @@
 
 int main()
 {
-	Proceso p1(1, 3, 1, 0), p2(2, 2, 0, 0), p3(3, 5, 2, 0), p4(4, 2, 3, 0), p5(5, 1, 1, 0);
-	Planner planification(5,2);
+	Proceso procesos[12];
+	procesos[0].setObject(0,3,5,1);
+	procesos[1].setObject(1,3,4,2);
+	procesos[2].setObject(1,4,3,3);
+	procesos[3].setObject(0,3,4,4);
+	procesos[4].setObject(0,2,5,5);
+	procesos[5].setObject(3,1,4,6);
+	procesos[6].setObject(3,2,4,7);
+	procesos[7].setObject(0,2,3,8);
+	procesos[8].setObject(5,1,4,9);
+	procesos[9].setObject(4,3,2,10);
+	procesos[10].setObject(4,2,4,11);
+	procesos[11].setObject(4,3,5,12);
 
-	planification.addProceso(p1);
-	planification.addProceso(p2);
-	planification.addProceso(p3);
-	planification.addProceso(p4);
-	planification.addProceso(p5);
+	Planner planification(12,2);
+
+	for (size_t i = 0; i < 12; ++i) {
+		planification.addProceso(procesos[i]);
+	}
 	
 	planification.runMonotarea();
 	planification.printTabla();

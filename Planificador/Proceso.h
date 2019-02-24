@@ -24,10 +24,12 @@ public:
 	bool comparacionEPDESC(Proceso&);
 	uint32 getLlegada();
 	uint32 getUejecucion();
+	void setUejecucion(uint32&&);
 	bool ejecuta();
 	void print();
 	bool operator==(Proceso&);
 	bool operator=(Proceso);
+	void setObject(uint32&&, uint32&&, uint32&&, uint32&&);
 	void agregaTiempoFinal(uint32&);
 	void setTiempoFinal();
 	~Proceso();

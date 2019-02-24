@@ -119,6 +119,11 @@ bool Planner::keepExecuting()
 	return false;
 }
 
+bool Planner::procesoTerminado(Proceso &i)
+{
+	return i.getUejecucion() == 0;
+}
+
 void Planner::ejecuta()
 {
 	for (vector<Proceso>::iterator i = Lista.begin(); i != Lista.end(); ++i) {
@@ -135,12 +140,14 @@ void Planner::eliminaCeros(uint32& Fin)
 			for (vector<Proceso>::iterator it = Tabla.begin(); it != Tabla.end(); ++it) {
 				if (*i == *it) {
 					it->agregaTiempoFinal(Fin);
+					it->setUejecucion(0);
 					it->setTiempoFinal();
+					
 				}
 			}
-			Lista.erase(Lista.remove(Lista.begin(), Lista.end(),); //ARREGLAR EXCEPCION FUERA DE RANGO
 		}
 	}
+	Lista.erase(remove_if(Lista.begin(), Lista.end(), [](Proceso x) {return x.getUejecucion() == 0;}), Lista.end());
 }
 
 void Planner::agregaListaMonotarea(uint32 &i)
@@ -162,6 +169,7 @@ void Planner::runMonotarea()
 		ejecuta();
 		++uExe;
 	}
+
 }
 
 
