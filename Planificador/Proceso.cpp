@@ -121,7 +121,7 @@ void Proceso::agregaTiempoFinal(uint32 &tfin)
 	t_Fin = tfin;
 }
 
-void Proceso::setTiempoFinal()
+void Proceso::setTiempoEspera()
 {
 	t_Esp = t_Fin - t_Lle - t_Exe;
 

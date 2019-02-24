@@ -31,6 +31,6 @@ public:
 	bool operator=(Proceso);
 	void setObject(uint32&&, uint32&&, uint32&&, uint32&&);
 	void agregaTiempoFinal(uint32&);
-	void setTiempoFinal();
+	void setTiempoEspera();
 	~Proceso();
 };

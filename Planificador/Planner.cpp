@@ -113,7 +113,7 @@ void Planner::Lista_ordenaEPDESC(uint32 &i)
 bool Planner::keepExecuting()
 {
 	for (vector<Proceso>::iterator i = Tabla.begin(); i != Tabla.end(); ++i) {
-		if (i->getUejecucion() != 0) {
+		if (i->getUejecucion() > 0) {
 			return true;
 		}
 	}
@@ -142,13 +142,24 @@ void Planner::eliminaCeros(uint32& Fin)
 				if (*i == *it) {
 					it->agregaTiempoFinal(Fin);
 					it->setUejecucion(0);
-					it->setTiempoFinal();	
+					it->setTiempoEspera();	
+				}
+			}
+
+			for (vector<Proceso>::iterator it = Lista.begin(); it != Lista.end(); ++it) {
+				if (*i == *it) {
+					it->setUejecucion(0);
 				}
 			}
 		}
 	}
-	Lista.erase(remove_if(Lista.begin(), Lista.end(), [](Proceso x) {return x.getUejecucion() == 0;}), Lista.end());
-	ListaAEjecutar.erase(remove_if(ListaAEjecutar.begin(), ListaAEjecutar.end(), [](Proceso x) {return x.getUejecucion() == 0;}), ListaAEjecutar.end());
+
+	Lista.erase(remove_if(Lista.begin(), Lista.end(), [](Proceso x) {
+		return x.getUejecucion() == 0;
+	}), Lista.end());
+	ListaAEjecutar.erase(remove_if(ListaAEjecutar.begin(), ListaAEjecutar.end(), [](Proceso x) {
+		return x.getUejecucion() == 0;
+	}), ListaAEjecutar.end());
 }
 
 void Planner::agregaListaMonotarea(uint32 &i)
@@ -169,12 +180,13 @@ void Planner::runMonotarea()
 		Lista_ordenaPEASC(0);
 
 		if (this->ListaAEjecutar.size() < canales) {
-			for (uint32 i = ListaAEjecutar.size()-1; i < canales; ++i) {
-				this->ListaAEjecutar.insert(ListaAEjecutar.end(), Lista[i-1]);
+			uint32 it = 0;
+			for (uint32 i = ListaAEjecutar.size(); i < canales; ++i) {
+				this->ListaAEjecutar.insert(ListaAEjecutar.end(), Lista[it]);
+				++it;
 			}
 		} 
 	
-
 		ejecuta();
 		cout << uExe;
 		++uExe;
