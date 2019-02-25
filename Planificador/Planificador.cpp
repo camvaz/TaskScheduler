@@ -25,12 +25,11 @@ int main()
 	for (size_t i = 0; i < 12; ++i) {
 		planification.addProceso(procesos[i]);
 	}
+
 	planification.printTabla();
 	planification.runMonotarea();
 	planification.printTabla();
-	cout << "\n";
 	planification.printLista();
-	cout << "n\n";
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

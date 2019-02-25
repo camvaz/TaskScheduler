@@ -19,9 +19,7 @@ Planner::Planner(uint32 &&size, uint32&& newCanales): numProcesos(size), canales
 
 void Planner::addProceso(Proceso nuevo)
 {
-	vector<Proceso>::iterator i;
-	i = Tabla.end();
-	this->Tabla.insert(i, nuevo);
+	this->Tabla.insert(Tabla.end(), nuevo);
 }
 
 void Planner::llenaLista(uint32 &tiempo)
@@ -198,6 +196,16 @@ void Planner::runMonotarea()
 		++uExe;
 	}
 
+}
+
+void Planner::runMultitarea()
+{
+	uint32 uExe = 0;
+	while (keepExecuting()) {
+		agregaListaMonotarea(uExe);
+		Lista_ordenaPEASC(0);
+
+	}
 }
 
 
