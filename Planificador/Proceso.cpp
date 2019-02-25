@@ -79,11 +79,9 @@ void Proceso::setUejecucion(uint32 &&i)
 	this->unidadesEjecucion = i;
 }
 
-bool Proceso::ejecuta()
+void Proceso::ejecuta()
 {
-	if (--unidadesEjecucion)
-		return true;
-	return false;
+	--unidadesEjecucion;
 }
 
 void Proceso::print() {

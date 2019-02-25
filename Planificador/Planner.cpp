@@ -127,9 +127,9 @@ bool Planner::procesoTerminado(Proceso &i)
 
 void Planner::ejecuta()
 {
-	for (uint32 i = 0; i < ListaAEjecutar.size(); ++i) {
-		if (ListaAEjecutar[i].getUejecucion() > 0) {
-			ListaAEjecutar[i].ejecuta();
+	for (vector<Proceso>::iterator i = ListaAEjecutar.begin(); i != ListaAEjecutar.end(); ++i) {
+		if (i->getUejecucion() > 0) {
+			i->ejecuta();	
 		} 
 	}
 }
@@ -137,7 +137,8 @@ void Planner::ejecuta()
 void Planner::eliminaCeros(uint32& Fin)
 {
 	for (vector<Proceso>::iterator i = ListaAEjecutar.begin(); i != ListaAEjecutar.end(); ++i) {
-		if (procesoTerminado(*i)) {
+		if (i->getUejecucion() == 0) {
+			
 			for (vector<Proceso>::iterator it = Tabla.begin(); it != Tabla.end(); ++it) {
 				if (*i == *it) {
 					it->agregaTiempoFinal(Fin);
@@ -151,12 +152,14 @@ void Planner::eliminaCeros(uint32& Fin)
 					it->setUejecucion(0);
 				}
 			}
+
 		}
 	}
 
 	Lista.erase(remove_if(Lista.begin(), Lista.end(), [](Proceso x) {
 		return x.getUejecucion() == 0;
 	}), Lista.end());
+
 	ListaAEjecutar.erase(remove_if(ListaAEjecutar.begin(), ListaAEjecutar.end(), [](Proceso x) {
 		return x.getUejecucion() == 0;
 	}), ListaAEjecutar.end());
@@ -173,6 +176,7 @@ void Planner::agregaListaMonotarea(uint32 &i)
 
 void Planner::runMonotarea()
 {
+	uint32 it;
 	uint32 uExe = 0;
 	while (keepExecuting()) {
 		eliminaCeros(uExe);
@@ -180,13 +184,15 @@ void Planner::runMonotarea()
 		Lista_ordenaPEASC(0);
 
 		if (this->ListaAEjecutar.size() < canales) {
-			uint32 it = 0;
-			for (uint32 i = ListaAEjecutar.size(); i < canales; ++i) {
-				this->ListaAEjecutar.insert(ListaAEjecutar.end(), Lista[it]);
-				++it;
+			if (Lista.size() > 0) {
+				it = 0;
+				for (size_t i = ListaAEjecutar.size(); i < canales; ++i) {
+					this->ListaAEjecutar.insert(ListaAEjecutar.end(), Lista[it]);
+					++it;
+				}
 			}
 		} 
-	
+
 		ejecuta();
 		cout << uExe;
 		++uExe;

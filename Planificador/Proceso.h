@@ -25,7 +25,7 @@ public:
 	uint32 getLlegada();
 	uint32 getUejecucion();
 	void setUejecucion(uint32&&);
-	bool ejecuta();
+	void ejecuta();
 	void print();
 	bool operator==(Proceso&);
 	bool operator=(Proceso);
