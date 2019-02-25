@@ -189,12 +189,22 @@ void Planner::runMonotarea()
 						if (ListaAEjecutar[i - 1] == Lista[it]) {
 							if (Lista.size() > 1) {
 								this->ListaAEjecutar.insert(ListaAEjecutar.end(), Lista[it + 1]);
-								break;
+								++it;
+							}
+							else {
+								this->ListaAEjecutar.insert(ListaAEjecutar.end(), Lista[it]);
+								++it;
 							}
 						}
+						else {
+							this->ListaAEjecutar.insert(ListaAEjecutar.end(), Lista[it]);
+							++it;
+						}
 					}
-					this->ListaAEjecutar.insert(ListaAEjecutar.end(), Lista[it]);
-					++it;
+					else {
+						this->ListaAEjecutar.insert(ListaAEjecutar.end(), Lista[it]);
+						++it;
+					}
 				}
 			}
 		} 
