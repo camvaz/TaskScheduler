@@ -6,23 +6,29 @@
 
 int main()
 {
-	Proceso procesos[12];
-	procesos[0].setObject(0,3,5,1);
-	procesos[1].setObject(1,3,4,2);
-	procesos[2].setObject(1,4,3,3);
-	procesos[3].setObject(0,3,4,4);
-	procesos[4].setObject(0,2,5,5);
-	procesos[5].setObject(3,1,4,6);
-	procesos[6].setObject(3,2,4,7);
-	procesos[7].setObject(0,2,3,8);
-	procesos[8].setObject(5,1,4,9);
-	procesos[9].setObject(4,3,2,10);
-	procesos[10].setObject(4,2,4,11);
-	procesos[11].setObject(4,3,5,12);
+	//Proceso procesos[12];
+	//procesos[0].setObject(0,3,5,1);
+	//procesos[1].setObject(1,3,4,2);
+	//procesos[2].setObject(1,4,3,3);
+	//procesos[3].setObject(0,3,4,4);
+	//procesos[4].setObject(0,2,5,5);
+	//procesos[5].setObject(3,1,4,6);
+	//procesos[6].setObject(3,2,4,7);
+	//procesos[7].setObject(0,2,3,8);
+	//procesos[8].setObject(5,1,4,9);
+	//procesos[9].setObject(4,3,2,10);
+	//procesos[10].setObject(4,2,4,11);
+	//procesos[11].setObject(4,3,5,12);
+	Proceso procesos[4];
 
-	Planner planification(12,2);
+	procesos[0].setObject(0, 1, 0, 1);
+	procesos[1].setObject(2, 1, 2, 2);
+	procesos[2].setObject(1, 3, 0, 3);
+	procesos[3].setObject(0, 2, 1, 4);
 
-	for (size_t i = 0; i < 12; ++i) {
+	Planner planification(4,2);
+
+	for (size_t i = 0; i < 4; ++i) {
 		planification.addProceso(procesos[i]);
 	}
 

@@ -82,6 +82,7 @@ void Proceso::setUejecucion(uint32 &&i)
 void Proceso::ejecuta()
 {
 	--unidadesEjecucion;
+	cout << "Ejecutando: " << pid << endl;
 }
 
 void Proceso::print() {

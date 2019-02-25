@@ -185,6 +185,14 @@ void Planner::runMonotarea()
 			if (Lista.size() > 0) {
 				it = 0;
 				for (size_t i = ListaAEjecutar.size(); i < canales; ++i) {
+					if (ListaAEjecutar.size() > 0) {
+						if (ListaAEjecutar[i - 1] == Lista[it]) {
+							if (Lista.size() > 1) {
+								this->ListaAEjecutar.insert(ListaAEjecutar.end(), Lista[it + 1]);
+								break;
+							}
+						}
+					}
 					this->ListaAEjecutar.insert(ListaAEjecutar.end(), Lista[it]);
 					++it;
 				}
