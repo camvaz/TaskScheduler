@@ -52,6 +52,17 @@ void Planner::printTabla()
 	}
 }
 
+void Planner::reboot()
+{
+	Lista.clear();
+	Tabla.clear();
+	ListaAEjecutar.clear();
+	ColaEspera.clear();
+	canales = 0;
+	numProcesos = 0;
+	contador = 0;
+}
+
 void Planner::Lista_ordenaPEASC(uint32 &&i)
 {
 	Proceso temp;
@@ -66,7 +77,7 @@ void Planner::Lista_ordenaPEASC(uint32 &&i)
 	}
 }
 
-void Planner::Lista_ordenaEPASC(uint32 &i)
+void Planner::Lista_ordenaEPASC(uint32 &&i)
 {
 	Proceso temp;
 	for ( i = 0; i < Lista.size(); ++i) {
@@ -80,7 +91,7 @@ void Planner::Lista_ordenaEPASC(uint32 &i)
 	}
 }
 
-void Planner::Lista_ordenaPEDESC(uint32 &i)
+void Planner::Lista_ordenaPEDESC(uint32 &&i)
 {
 	Proceso temp;
 	for (i = 0; i < Lista.size(); ++i) {
@@ -94,7 +105,7 @@ void Planner::Lista_ordenaPEDESC(uint32 &i)
 	}
 }
 
-void Planner::Lista_ordenaEPDESC(uint32 &i)
+void Planner::Lista_ordenaEPDESC(uint32 &&i)
 {
 	Proceso temp;
 	for (i = 0; i < Lista.size(); ++i) {
@@ -105,6 +116,31 @@ void Planner::Lista_ordenaEPDESC(uint32 &i)
 				Lista[i] = temp;
 			}
 		}
+	}
+}
+
+void Planner::eligeOrdenamiento(uint32 &opc)
+{
+	switch (opc) {
+	case 0:
+		Lista_ordenaPEASC(0);
+		break;
+
+	case 1:
+		Lista_ordenaEPASC(0);
+		break;
+
+	case 2:
+		Lista_ordenaPEDESC(0);
+		break;
+
+	case 3:
+		Lista_ordenaEPDESC(0);
+		break;
+
+	default:
+		cout << "No se recibio opcion de ordenamiento";
+		break;
 	}
 }
 
@@ -123,7 +159,7 @@ bool Planner::procesoTerminado(Proceso &i)
 	return i.getUejecucion() == 0;
 }
 
-void Planner::ejecuta()
+void Planner::ejecutaMonoTarea()
 {
 	for (vector<Proceso>::iterator i = ListaAEjecutar.begin(); i != ListaAEjecutar.end(); ++i) {
 		if (i->getUejecucion() > 0) {
@@ -132,7 +168,16 @@ void Planner::ejecuta()
 	}
 }
 
-void Planner::eliminaCeros(uint32& Fin)
+void Planner::ejecutaMultiTarea()
+{
+	for (size_t i = 0; i < canales; ++i) {
+		if (Lista[i].getUejecucion() > 0) {
+			Lista[i].ejecuta();
+		}
+	}
+}
+
+void Planner::eliminaCerosMonotarea(uint32& Fin)
 {
 	for (vector<Proceso>::iterator i = ListaAEjecutar.begin(); i != ListaAEjecutar.end(); ++i) {
 		if (i->getUejecucion() == 0) {
@@ -163,7 +208,12 @@ void Planner::eliminaCeros(uint32& Fin)
 	}), ListaAEjecutar.end());
 }
 
-void Planner::agregaListaMonotarea(uint32 &i)
+void Planner::eliminaCerosMultitarea(uint32 &uExe)
+{
+	
+}
+
+void Planner::agregaLista(uint32 &i)
 {
 	for (vector<Proceso>::iterator it = Tabla.begin(); it != Tabla.end(); ++it) {
 		if (it->getLlegada() == i) {
@@ -172,14 +222,13 @@ void Planner::agregaListaMonotarea(uint32 &i)
 	}
 }
 
-void Planner::runMonotarea()
+void Planner::runMonotarea(uint32 &Alg)
 {
-	uint32 it;
-	uint32 uExe = 0;
+	uint32 uExe = 0, it = 0;
 	while (keepExecuting()) {
-		eliminaCeros(uExe);
-		agregaListaMonotarea(uExe);
-		Lista_ordenaPEASC(0);
+		eliminaCerosMonotarea(uExe);
+		agregaLista(uExe);
+		eligeOrdenamiento(Alg);
 
 		if (this->ListaAEjecutar.size() < canales) {
 			if (Lista.size() > 0) {
@@ -209,20 +258,32 @@ void Planner::runMonotarea()
 			}
 		} 
 
-		ejecuta();
+		ejecutaMonoTarea();
 		cout << uExe;
 		++uExe;
 	}
 
 }
 
-void Planner::runMultitarea()
+void Planner::runMultitarea(uint32 &Alg)
 {
-	uint32 uExe = 0;
+	uint32 uExe = 0, it = 0;
 	while (keepExecuting()) {
-		agregaListaMonotarea(uExe);
-		Lista_ordenaPEASC(0);
+		eliminaCerosMultitarea(uExe);
+		agregaLista(uExe);
+		eligeOrdenamiento(Alg);
+		ejecutaMultiTarea();
+		
 
+		if (Lista.size() > 0) {
+			for (size_t i = ColaEspera.size(); i < Lista.size(); ++i)
+			{
+				if (Lista.size() > 0) {
+					ColaEspera.insert(ColaEspera.end(), Lista[it]);
+					++it;
+				}
+			}
+		}
 	}
 }
 
