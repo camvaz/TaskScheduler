@@ -224,22 +224,26 @@ void Planner::agregaLista(uint32 &i)
 
 void Planner::runMonotarea(uint32 &Alg)
 {
-	uint32 uExe = 0, ct = 0;
+	uint32 uExe = 0;
+	size_t ct = 0;
 	while (keepExecuting()) {
+		cout << "Unidad: " << uExe << "\n\n";
 		eliminaCerosMonotarea(uExe);
 		agregaLista(uExe);
 		eligeOrdenamiento(Alg);
+		printLista();
 
+		cout << "\nTamanio vector ejecutar: " << ListaAEjecutar.size() << endl;
 		if (this->ListaAEjecutar.size() < size_t(canales)) {
 			if (Lista.size() > 0) {
 				if (ListaAEjecutar.size() > 0) {
 					ct = 0;
 					while(ListaAEjecutar.size() < size_t(canales) && (size_t(ct) < ListaAEjecutar.size() && size_t(ct) < Lista.size())) {
-						if (!(Lista[ct] == ListaAEjecutar[ct])) {
-							this->ListaAEjecutar.insert(ListaAEjecutar.end(), Lista[ct]);
+						if (Lista[ct] == ListaAEjecutar[ct]) {		
 							++ct;
 						}
 						else {
+							this->ListaAEjecutar.insert(ListaAEjecutar.end(), Lista[ct]);
 							++ct;
 						}
 					}
@@ -254,7 +258,6 @@ void Planner::runMonotarea(uint32 &Alg)
 				}
 			}
 		} 
-		cout << uExe <<endl;
 		ejecutaMonoTarea();
 		++uExe;
 	}

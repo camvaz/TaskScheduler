@@ -124,7 +124,7 @@ void Proceso::setTiempoEspera()
 {
 	t_Esp = t_Fin - t_Lle - t_Exe;
 
-	cout << "\n" << t_Fin << "  " << t_Lle << "  " << t_Exe << endl;
+	cout << "\n" << "Proceso " << pid << " terminado. t_Esp = " << t_Fin << "  " << t_Lle << "  " << t_Exe << endl;
 }
 
 
