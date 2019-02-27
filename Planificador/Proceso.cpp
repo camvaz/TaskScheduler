@@ -12,10 +12,11 @@ Proceso::Proceso() {
 	t_Lle = 0;
 	t_Fin = 0;
 	unidadesEjecucion = 0;
+	pVueltaMulti = 0;
 }
 
 Proceso::Proceso(uint32&& newPid, uint32&& newExe, uint32&& newPrioridad, uint32&& newLlegada) :
-	pid(newPid), t_Exe(newExe), Prioridad(newPrioridad), t_Esp(0), t_Lle(newLlegada), t_Fin(0), unidadesEjecucion(newExe){}
+	pid(newPid), t_Exe(newExe), Prioridad(newPrioridad), t_Esp(0), t_Lle(newLlegada), t_Fin(0), unidadesEjecucion(newExe), pVueltaMulti(0){}
 
 Proceso::Proceso(const Proceso &tmp)
 {
@@ -26,6 +27,7 @@ Proceso::Proceso(const Proceso &tmp)
 	this->t_Lle = tmp.t_Lle;
 	this->t_Fin = tmp.t_Fin;
 	this->unidadesEjecucion = tmp.unidadesEjecucion;
+	this->pVueltaMulti = tmp.pVueltaMulti;
 }
 
 bool Proceso::comparacionPEASC(Proceso tmp) {
@@ -125,6 +127,11 @@ void Proceso::setTiempoEspera()
 	t_Esp = t_Fin - t_Lle - t_Exe;
 
 	cout << "\n" << "Proceso " << pid << " terminado. t_Esp = " << t_Fin << "  " << t_Lle << "  " << t_Exe << endl;
+}
+
+void Proceso::pVueltaSuccess()
+{
+	pVueltaMulti = true;
 }
 
 

@@ -15,8 +15,9 @@ private:
 	void				eliminaCerosMonotarea(uint32&);
 	void				eliminaCerosMultitarea(uint32&);
 	void				agregaLista(uint32&);
+	void				agregaColaEspera(uint32&);
 	bool				isEmpty();
-
+	void				vaciaColaEspera();
 	
 public:
 	Planner();
@@ -26,11 +27,16 @@ public:
 	void printLista();
 	void printTabla();
 	void reboot();
+	void Cola_ordenaPEASC(uint32&&);
+	void Cola_ordenaEPASC(uint32&&);
+	void Cola_ordenaEPDESC(uint32&&);
+	void Cola_ordenaPEDESC(uint32&&);
 	void Lista_ordenaPEASC(uint32&&);
 	void Lista_ordenaEPASC(uint32&&);
 	void Lista_ordenaPEDESC(uint32&&);
 	void Lista_ordenaEPDESC(uint32&&);
-	void eligeOrdenamiento(uint32&);
+	void eligeOrdenamientoLista(uint32&);
+	void eligeOrdenamientoCola(uint32&);
 	void runMonotarea(uint32&);
 	void runMultitarea(uint32&);
 	~Planner();

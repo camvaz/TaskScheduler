@@ -20,8 +20,9 @@ int main()
 	//procesos[10].setObject(4,2,4,11);
 	//procesos[11].setObject(4,3,5,12);
 	Proceso procesos[9];
+	Proceso procesosMulti[10];
 
-	uint32 algo = 1;
+	uint32 algo = 1, algoMulti = 2;
 
 	//llegada, ejecucion, prioridad, pid
 
@@ -35,7 +36,19 @@ int main()
 	procesos[7].setObject(6, 1, 1, 8);
 	procesos[8].setObject(0, 3, 0, 9);
 
+	procesosMulti[0].setObject(0, 3, 5, 1);
+	procesosMulti[1].setObject(0, 2, 4, 2);
+	procesosMulti[2].setObject(4, 3, 2, 3);
+	procesosMulti[3].setObject(6, 2, 3, 4);
+	procesosMulti[4].setObject(5, 3, 2, 5);
+	procesosMulti[5].setObject(6, 2, 2, 6);
+	procesosMulti[6].setObject(4, 3, 3, 7);
+	procesosMulti[7].setObject(4, 2, 4, 8);
+	procesosMulti[8].setObject(5, 3, 1, 9);
+	procesosMulti[9].setObject(5, 3, 0, 10);
+
 	Planner planification(9, 2);
+	Planner planificationMulti(10, 2);
 
 	for (size_t i = 0; i < 9; ++i) {
 		planification.addProceso(procesos[i]);
@@ -45,6 +58,16 @@ int main()
 	planification.runMonotarea(algo);
 	planification.printTabla();
 	planification.printLista();
+
+	for (size_t i = 0; i < 10; ++i) {
+		planificationMulti.addProceso(procesosMulti[i]);
+	}
+
+	planificationMulti.printTabla();
+	planificationMulti.runMultitarea(algoMulti);
+	planificationMulti.printTabla();
+	planificationMulti.printLista();
+
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu

@@ -10,6 +10,7 @@ private: uint32     pid;
 		 uint32     t_Exe;
 		 uint32		unidadesEjecucion;
 		 uint32     Prioridad;
+		 bool		pVueltaMulti;
 		 uint32     t_Esp;
 		 uint32     t_Fin;
 
@@ -32,5 +33,6 @@ public:
 	void setObject(uint32&&, uint32&&, uint32&&, uint32&&);
 	void agregaTiempoFinal(uint32&);
 	void setTiempoEspera();
+	void pVueltaSuccess();
 	~Proceso();
 };
