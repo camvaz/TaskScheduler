@@ -224,42 +224,38 @@ void Planner::agregaLista(uint32 &i)
 
 void Planner::runMonotarea(uint32 &Alg)
 {
-	uint32 uExe = 0, it = 0;
+	uint32 uExe = 0, ct = 0;
 	while (keepExecuting()) {
 		eliminaCerosMonotarea(uExe);
 		agregaLista(uExe);
 		eligeOrdenamiento(Alg);
 
-		if (this->ListaAEjecutar.size() < canales) {
+		if (this->ListaAEjecutar.size() < size_t(canales)) {
 			if (Lista.size() > 0) {
-				it = 0;
-				for (size_t i = ListaAEjecutar.size(); i < canales; ++i) {
-					if (ListaAEjecutar.size() > 0) {
-						if (ListaAEjecutar[i - 1] == Lista[it]) {
-							if (Lista.size() > 1) {
-								this->ListaAEjecutar.insert(ListaAEjecutar.end(), Lista[it + 1]);
-								++it;
-							}
-							else {
-								this->ListaAEjecutar.insert(ListaAEjecutar.end(), Lista[it]);
-								++it;
-							}
+				if (ListaAEjecutar.size() > 0) {
+					ct = 0;
+					while(ListaAEjecutar.size() < size_t(canales) && (size_t(ct) < ListaAEjecutar.size() && size_t(ct) < Lista.size())) {
+						if (!(Lista[ct] == ListaAEjecutar[ct])) {
+							this->ListaAEjecutar.insert(ListaAEjecutar.end(), Lista[ct]);
+							++ct;
 						}
 						else {
-							this->ListaAEjecutar.insert(ListaAEjecutar.end(), Lista[it]);
-							++it;
+							++ct;
 						}
 					}
-					else {
-						this->ListaAEjecutar.insert(ListaAEjecutar.end(), Lista[it]);
-						++it;
+				}
+				else {
+					ct = 0;
+					while (ListaAEjecutar.size() < size_t(canales) && size_t(ct) <= Lista.size())
+					{
+						this->ListaAEjecutar.insert(ListaAEjecutar.end(), Lista[ct]);
+						++ct;
 					}
 				}
 			}
 		} 
-
+		cout << uExe <<endl;
 		ejecutaMonoTarea();
-		cout << uExe;
 		++uExe;
 	}
 
