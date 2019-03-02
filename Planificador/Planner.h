@@ -13,7 +13,7 @@ private:
 	bool				keepExecuting();
 	bool				procesoTerminado(Proceso&);
 	void				eliminaCerosMonotarea(uint32&);
-	void				eliminaCerosMultitarea(uint32&);
+	void				eliminaCerosMultitarea(uint32);
 	void				agregaLista(uint32&);
 	void				agregaColaEspera(uint32&);
 	bool				isEmpty();
@@ -26,6 +26,7 @@ public:
 	void llenaLista(uint32&);
 	void printLista();
 	void printTabla();
+	void printColaEspera();
 	void reboot();
 	void Cola_ordenaPEASC(uint32&&);
 	void Cola_ordenaEPASC(uint32&&);

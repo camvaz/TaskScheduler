@@ -76,6 +76,11 @@ uint32 Proceso::getUejecucion()
 	return unidadesEjecucion;
 }
 
+uint32 Proceso::getTExe()
+{
+	return t_Exe;
+}
+
 void Proceso::setUejecucion(uint32 &&i)
 {
 	this->unidadesEjecucion = i;
@@ -88,7 +93,7 @@ void Proceso::ejecuta()
 }
 
 void Proceso::print() {
-	cout << "\nPID: " << pid << "\nPrioridad: " << Prioridad << "\nTiempo de ejecucion: " << t_Exe << "\nTiempo de llegada: " << t_Lle << "\nTiempo de espera: " << t_Esp  << "\nTiempo Final: " << t_Fin << endl;
+	cout << "\nPID: " << pid << "\nPrioridad: " << Prioridad << "\nTiempo de ejecucion: " << t_Exe << "\nTiempo de llegada: " << t_Lle << "\nTiempo de espera: " << t_Esp  << "\nTiempo Final: " << t_Fin << "\nEjecuciones restantes: " << unidadesEjecucion << endl;
 }
 
 bool Proceso::operator==(Proceso &tmp)

@@ -25,6 +25,7 @@ public:
 	bool comparacionEPDESC(Proceso&);
 	uint32 getLlegada();
 	uint32 getUejecucion();
+	uint32 getTExe();
 	void setUejecucion(uint32&&);
 	void ejecuta();
 	void print();

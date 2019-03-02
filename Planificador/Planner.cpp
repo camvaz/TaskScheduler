@@ -41,6 +41,7 @@ void Planner::vaciaColaEspera()
 	for (vector<Proceso>::iterator i = ColaEspera.begin(); i != ColaEspera.end(); ++i) {
 		Lista.insert(Lista.end(), *i);
 	}
+	ColaEspera.clear();
 }
 
 void Planner::printLista()
@@ -54,6 +55,14 @@ void Planner::printLista()
 void Planner::printTabla()
 {
 	for (vector<Proceso>::iterator i = Tabla.begin(); i != Tabla.end(); ++i) {
+		i->print();
+		cout << endl;
+	}
+}
+
+void Planner::printColaEspera()
+{
+	for (vector<Proceso>::iterator i = ColaEspera.begin(); i != ColaEspera.end(); ++i) {
 		i->print();
 		cout << endl;
 	}
@@ -259,9 +268,15 @@ void Planner::ejecutaMonoTarea()
 void Planner::ejecutaMultiTarea()
 {
 	for (size_t i = 0; i < size_t(canales); ++i) {
-		if (Lista.size() < i) {
+		if (i < Lista.size()) {
 			if (Lista[i].getUejecucion() > 0) {
 				Lista[i].ejecuta();
+			}
+			for (vector<Proceso>::iterator it = Tabla.begin(); it != Tabla.end(); ++it) {
+				if (Lista[i] == *it) {
+					cout << "\ncoherencia\n";
+					it->ejecuta();
+				}
 			}
 		}
 	}
@@ -298,7 +313,7 @@ void Planner::eliminaCerosMonotarea(uint32& Fin)
 	}), ListaAEjecutar.end());
 }
 
-void Planner::eliminaCerosMultitarea(uint32 &uExe)
+void Planner::eliminaCerosMultitarea(uint32 uExe)
 {
 	for (vector<Proceso>::iterator i = Lista.begin(); i != Lista.end(); ++i) {
 		if (i->getUejecucion() == 0) {
@@ -332,12 +347,10 @@ void Planner::agregaColaEspera(uint32 &opc)
 	for (vector<Proceso>::iterator i = Lista.begin(); i != Lista.end(); ++i) {
 		if (i->getUejecucion() > 0) {
 			this->ColaEspera.insert(ColaEspera.end(), *i);
-			Lista.erase(remove_if(Lista.begin(), Lista.end(), [](Proceso x) {
-				return x == *i;
-			}), Lista.end());
 		}
 	}
 	
+
 	eligeOrdenamientoCola(opc);
 }
 
@@ -387,18 +400,30 @@ void Planner::runMonotarea(uint32 &Alg)
 
 void Planner::runMultitarea(uint32 &Alg)
 {
-	uint32 uExe = 0, it = 0;
+	uint32 uExe = 0;
 	bool pVuelta = false, nVuelta = false;
 	while (keepExecuting()) {
 		cout << "Unidad de Ejecución: " << uExe << endl << endl;
 		if (!pVuelta) {
 			cout << "Primer vuelta\n\n";
+			
 			agregaLista(uExe);
 			eligeOrdenamientoLista(Alg);
-			ejecutaMultiTarea();
-			eliminaCerosMultitarea(uExe);
-			agregaColaEspera(Alg);
-
+			
+			if(Lista.size()>0){
+				ejecutaMultiTarea();
+				eliminaCerosMultitarea(uExe+1);
+				agregaColaEspera(Alg);
+			}
+			else {
+				if (ColaEspera.size() > 0) {
+					vaciaColaEspera();
+					ejecutaMultiTarea();
+					eliminaCerosMultitarea(uExe+1);
+					agregaColaEspera(Alg);
+				}
+			}
+				
 			pVuelta = true;
 			for (vector<Proceso>::iterator i = Tabla.begin(); i != Tabla.end(); ++i) {
 				if (pVuelta) {
@@ -406,22 +431,25 @@ void Planner::runMultitarea(uint32 &Alg)
 						for (vector<Proceso>::iterator it = ColaEspera.begin(); it != ColaEspera.end(); ++it) {
 							if (*i == *it) {
 								pVuelta = true;
-								break;
 							}
 							else {
-								pVuelta = false;
+								pVuelta = false;								
 							}
-
 						}
 					}
 				}
-				else {
-					break;
-				}
 			}
+
+			Lista.erase(remove_if(Lista.begin(), Lista.end(), [](Proceso x) {
+				return x.getUejecucion() != x.getTExe();
+			}), Lista.end());
+
 			++uExe;
 		}
 		else {
+			printTabla();
+			cout << "\ngegqegqeafasfaw\n";
+			printColaEspera();
 			cout << "Unidad de vuelta n: " << uExe << endl << endl;
 			if (Lista.size() == 0)
 				vaciaColaEspera();
