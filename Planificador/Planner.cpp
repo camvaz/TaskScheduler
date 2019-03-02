@@ -424,19 +424,13 @@ void Planner::runMultitarea(uint32 &Alg)
 				}
 			}
 				
-			pVuelta = true;
 			for (vector<Proceso>::iterator i = Tabla.begin(); i != Tabla.end(); ++i) {
-				if (pVuelta) {
-					if (i->getUejecucion() > 0) {
-						for (vector<Proceso>::iterator it = ColaEspera.begin(); it != ColaEspera.end(); ++it) {
-							if (*i == *it) {
-								pVuelta = true;
-							}
-							else {
-								pVuelta = false;								
-							}
-						}
-					}
+				if (i->getUejecucion() != i->getTExe()) {
+					pVuelta = true;
+				}
+				else {
+					pVuelta = false;
+					break;
 				}
 			}
 
@@ -449,7 +443,6 @@ void Planner::runMultitarea(uint32 &Alg)
 		else {
 			printTabla();
 			cout << "\ngegqegqeafasfaw\n";
-			printColaEspera();
 			cout << "Unidad de vuelta n: " << uExe << endl << endl;
 			if (Lista.size() == 0)
 				vaciaColaEspera();
