@@ -33,7 +33,7 @@ Proceso::Proceso(const Proceso &tmp)
 bool Proceso::comparacionPEASC(Proceso tmp) {
 	if ((this->Prioridad < tmp.Prioridad) || 
 		(this->Prioridad == tmp.Prioridad && this->t_Exe < tmp.t_Exe) || 
-		(this->Prioridad == tmp.Prioridad && this->t_Exe == tmp.t_Exe && this->pid > tmp.pid)) {
+		(this->Prioridad == tmp.Prioridad && this->t_Exe == tmp.t_Exe && this->pid < tmp.pid)) {
 		return true;
 	}
 	return false;
@@ -42,7 +42,7 @@ bool Proceso::comparacionPEASC(Proceso tmp) {
 bool Proceso::comparacionEPASC(Proceso &tmp) {
 	if ((this->t_Exe < tmp.t_Exe) ||
 		(this->t_Exe == tmp.t_Exe && this->Prioridad < tmp.Prioridad) ||
-		(this->Prioridad == tmp.Prioridad && this->t_Exe == tmp.t_Exe && this->pid > tmp.pid)) {
+		(this->Prioridad == tmp.Prioridad && this->t_Exe == tmp.t_Exe && this->pid < tmp.pid)) {
 		return true;
 	}
 	return false;
@@ -51,7 +51,7 @@ bool Proceso::comparacionEPASC(Proceso &tmp) {
 bool Proceso::comparacionPEDESC(Proceso &tmp) {
 	if ((this->Prioridad < tmp.Prioridad) ||
 		(this->Prioridad == tmp.Prioridad && this->t_Exe < tmp.t_Exe) ||
-		(this->Prioridad == tmp.Prioridad && this->t_Exe == tmp.t_Exe && this->pid < tmp.pid)) {
+		(this->Prioridad == tmp.Prioridad && this->t_Exe == tmp.t_Exe && this->pid > tmp.pid)) {
 		return true;
 	}
 	return false;
@@ -60,7 +60,7 @@ bool Proceso::comparacionPEDESC(Proceso &tmp) {
 bool Proceso::comparacionEPDESC(Proceso &tmp) {
 	if ((this->t_Exe < tmp.t_Exe) ||
 		(this->t_Exe == tmp.t_Exe && this->Prioridad < tmp.Prioridad) ||
-		(this->Prioridad == tmp.Prioridad && this->t_Exe == tmp.t_Exe && this->pid < tmp.pid)) {
+		(this->Prioridad == tmp.Prioridad && this->t_Exe == tmp.t_Exe && this->pid > tmp.pid)) {
 		return true;
 	}
 	return false;
@@ -96,10 +96,6 @@ void Proceso::print() {
 	cout << "\nPID: " << pid << "\nPrioridad: " << Prioridad << "\nTiempo de ejecucion: " << t_Exe << "\nTiempo de llegada: " << t_Lle << "\nTiempo de espera: " << t_Esp  << "\nTiempo Final: " << t_Fin << "\nEjecuciones restantes: " << unidadesEjecucion << endl;
 }
 
-bool Proceso::operator==(Proceso &tmp)
-{
-	return this->pid == tmp.pid;
-}
 
 bool Proceso::operator=(Proceso tmp)
 {
@@ -111,6 +107,11 @@ bool Proceso::operator=(Proceso tmp)
 	this->t_Fin = tmp.t_Fin;
 	this->unidadesEjecucion = tmp.unidadesEjecucion;
 	return 1;
+}
+
+bool Proceso::operator==(Proceso x)
+{
+	return this->pid == x.pid;
 }
 
 void Proceso::setObject(uint32 &&tllegada, uint32 &&texe, uint32 &&tp, uint32 &&npid)

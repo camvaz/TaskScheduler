@@ -29,8 +29,8 @@ public:
 	void setUejecucion(uint32&&);
 	void ejecuta();
 	void print();
-	bool operator==(Proceso&);
 	bool operator=(Proceso);
+	bool operator==(Proceso);
 	void setObject(uint32&&, uint32&&, uint32&&, uint32&&);
 	void agregaTiempoFinal(uint32&);
 	void setTiempoEspera();

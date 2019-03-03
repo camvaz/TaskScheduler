@@ -10,6 +10,7 @@ private:
 	
 	void				ejecutaMonoTarea();
 	void				ejecutaMultiTarea();
+	void				ejecutaMultiTarea2daVuelta(uint32&,uint32&);
 	bool				keepExecuting();
 	bool				procesoTerminado(Proceso&);
 	void				eliminaCerosMonotarea(uint32&);
