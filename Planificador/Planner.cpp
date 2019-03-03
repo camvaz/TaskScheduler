@@ -291,7 +291,7 @@ void Planner::ejecutaMultiTarea2daVuelta(uint32& at, uint32 &alg)
 				Lista[i].ejecuta();
 				auto result = find(begin(ColaEspera), end(ColaEspera), Lista[i]);
 
-				if (result == ColaEspera.end()) {
+				if (result == ColaEspera.end() && Lista[i].getUejecucion() > 0) {
 					ColaEspera.insert(ColaEspera.end(), Lista[i]);
 					eligeOrdenamientoCola(alg);
 				}
@@ -439,7 +439,10 @@ void Planner::runMultitarea(uint32 &Alg)
 		cout << "Unidad de Ejecución: " << uExe << endl << endl;
 		if (!pVuelta) {
 			cout << "Primer vuelta\n\n";
-			
+			cout << "Lista:\n";
+			printLista();
+			cout << "\nCola\n";
+			printColaEspera();
 			agregaLista(uExe);
 			eligeOrdenamientoLista(Alg);
 			
@@ -474,13 +477,15 @@ void Planner::runMultitarea(uint32 &Alg)
 			++uExe;
 		}
 		else {
+			cout << "Unidad de vuelta n: " << uExe << endl << endl;
+			cout << "\nTabla:\n";
 			printTabla();
-			cout << "\nigreohger" << endl;
+			cout << "\nLista:" << endl;
 			printLista();
-			cout << "\nageagaegeagea\n";
+			cout << "\nCola:\n";
 			printColaEspera();
 
-			cout << "Unidad de vuelta n: " << uExe << endl << endl;
+			
 			if (Lista.size() == 0)
 				vaciaColaEspera();
 
