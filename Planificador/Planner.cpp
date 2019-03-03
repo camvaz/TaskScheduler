@@ -289,45 +289,24 @@ void Planner::ejecutaMultiTarea2daVuelta(uint32& at, uint32 &alg)
 		if (i < Lista.size()) {
 			if (Lista[i].getUejecucion() > 0) {
 				Lista[i].ejecuta();
+				auto result = find(begin(ColaEspera), end(ColaEspera), Lista[i]);
 
-				if (Lista[i].getUejecucion() > 0) {
-					auto result = find(begin(ColaEspera), end(ColaEspera), Lista[i]);
-					if (result == ColaEspera.end()) {
-						ColaEspera.insert(ColaEspera.end(), Lista[i]);
-						eligeOrdenamientoCola(alg);
-					}
-					else {
-
-					}
+				if (result == ColaEspera.end()) {
+					ColaEspera.insert(ColaEspera.end(), Lista[i]);
+					eligeOrdenamientoCola(alg);
 				}
 
-				else {
-					if (i + 1 < Lista.size()) {
-						for (size_t j = i + 1; j < Lista.size();++j) {
-							auto result = find(begin(ColaEspera), end(ColaEspera), Lista[j]);
-							if (result == ColaEspera.end()) {
-								ColaEspera.insert(ColaEspera.end(), Lista[j]);
-								eligeOrdenamientoCola(alg);
-								break;
-							}
-							else {
-								
-							}
-						}		
+				for (vector<Proceso>::iterator it = Tabla.begin(); it != Tabla.end(); ++it) {
+					if (Lista[i] == *it) {
+						cout << "\ncoherencia\n";
+						it->ejecuta();
 					}
 				}
+				container.push_back(Lista[i]);
 			}
-
-			for (vector<Proceso>::iterator it = Tabla.begin(); it != Tabla.end(); ++it) {
-				if (Lista[i] == *it) {
-					cout << "\ncoherencia\n";
-					it->ejecuta();
-				}
-			}
-			container.push_back(Lista[i]);
 		}
 	}
-	eliminaCerosMultitarea(at);
+	eliminaCerosMultitarea(at+1);
 
 	for (vector<Proceso>::iterator i = container.begin(); i < container.end(); ++i) {
 		Lista.erase(remove_if(Lista.begin(), Lista.end(), [i](Proceso x) {
