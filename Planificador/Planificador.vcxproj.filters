@@ -21,12 +21,6 @@
     <ClInclude Include="Proceso.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Canal.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="UEjecucion.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Planner.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -39,12 +33,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Proceso.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Canal.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="UEjecucion.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Planner.cpp">

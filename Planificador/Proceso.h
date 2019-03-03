@@ -10,6 +10,7 @@ private: uint32     pid;
 		 uint32     t_Exe;
 		 uint32		unidadesEjecucion;
 		 uint32     Prioridad;
+		 bool		pVueltaMulti;
 		 uint32     t_Esp;
 		 uint32     t_Fin;
 
@@ -24,13 +25,15 @@ public:
 	bool comparacionEPDESC(Proceso&);
 	uint32 getLlegada();
 	uint32 getUejecucion();
+	uint32 getTExe();
 	void setUejecucion(uint32&&);
 	void ejecuta();
 	void print();
-	bool operator==(Proceso&);
 	bool operator=(Proceso);
+	bool operator==(Proceso);
 	void setObject(uint32&&, uint32&&, uint32&&, uint32&&);
 	void agregaTiempoFinal(uint32&);
 	void setTiempoEspera();
+	void pVueltaSuccess();
 	~Proceso();
 };
