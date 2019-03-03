@@ -151,14 +151,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Canal.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Planner.h" />
     <ClInclude Include="Proceso.h" />
-    <ClInclude Include="UEjecucion.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Canal.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -168,7 +165,6 @@
     <ClCompile Include="Planificador.cpp" />
     <ClCompile Include="Planner.cpp" />
     <ClCompile Include="Proceso.cpp" />
-    <ClCompile Include="UEjecucion.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
