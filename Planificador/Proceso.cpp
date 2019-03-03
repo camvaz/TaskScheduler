@@ -16,7 +16,11 @@ Proceso::Proceso() {
 }
 
 Proceso::Proceso(uint32&& newPid, uint32&& newExe, uint32&& newPrioridad, uint32&& newLlegada) :
+<<<<<<< HEAD
 	pid(newPid), t_Exe(newExe), Prioridad(newPrioridad), t_Esp(0), t_Lle(newLlegada), t_Fin(0), unidadesEjecucion(newExe), pVueltaMulti(0) {}
+=======
+	pid(newPid), t_Exe(newExe), Prioridad(newPrioridad), t_Esp(0), t_Lle(newLlegada), t_Fin(0), unidadesEjecucion(newExe), pVueltaMulti(0){}
+>>>>>>> 5e88b6028652a430d470ed90f912b968540161cc
 
 Proceso::Proceso(const Proceso &tmp)
 {
@@ -31,8 +35,13 @@ Proceso::Proceso(const Proceso &tmp)
 }
 
 bool Proceso::comparacionPEASC(Proceso tmp) {
+<<<<<<< HEAD
 	if ((this->Prioridad < tmp.Prioridad) ||
 		(this->Prioridad == tmp.Prioridad && this->t_Exe < tmp.t_Exe) ||
+=======
+	if ((this->Prioridad < tmp.Prioridad) || 
+		(this->Prioridad == tmp.Prioridad && this->t_Exe < tmp.t_Exe) || 
+>>>>>>> 5e88b6028652a430d470ed90f912b968540161cc
 		(this->Prioridad == tmp.Prioridad && this->t_Exe == tmp.t_Exe && this->pid < tmp.pid)) {
 		return true;
 	}
@@ -93,7 +102,11 @@ void Proceso::ejecuta()
 }
 
 void Proceso::print() {
+<<<<<<< HEAD
 	cout << "\nPID: " << pid << "\nPrioridad: " << Prioridad << "\nTiempo de ejecucion: " << t_Exe << "\nTiempo de llegada: " << t_Lle << "\nTiempo de espera: " << t_Esp << "\nTiempo Final: " << t_Fin << "\nEjecuciones restantes: " << unidadesEjecucion << endl;
+=======
+	cout << "\nPID: " << pid << "\nPrioridad: " << Prioridad << "\nTiempo de ejecucion: " << t_Exe << "\nTiempo de llegada: " << t_Lle << "\nTiempo de espera: " << t_Esp  << "\nTiempo Final: " << t_Fin << "\nEjecuciones restantes: " << unidadesEjecucion << endl;
+>>>>>>> 5e88b6028652a430d470ed90f912b968540161cc
 }
 
 
