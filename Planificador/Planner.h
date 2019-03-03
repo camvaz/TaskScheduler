@@ -6,19 +6,11 @@ private:
 	vector<Proceso>		Lista;
 	vector<Proceso>		ListaAEjecutar;
 	vector<Proceso>		ColaEspera;
-<<<<<<< HEAD
 	uint32				contador, numProcesos, canales, esperaTotal;
 
 	void				ejecutaMonoTarea();
 	void				ejecutaMultiTarea();
 	void				ejecutaMultiTarea2daVuelta(uint32&, uint32&);
-=======
-	uint32				contador, numProcesos, canales;
-	
-	void				ejecutaMonoTarea();
-	void				ejecutaMultiTarea();
-	void				ejecutaMultiTarea2daVuelta(uint32&,uint32&);
->>>>>>> 5e88b6028652a430d470ed90f912b968540161cc
 	bool				keepExecuting();
 	bool				procesoTerminado(Proceso&);
 	void				eliminaCerosMonotarea(uint32&);
@@ -27,11 +19,7 @@ private:
 	void				agregaColaEspera(uint32&);
 	bool				isEmpty();
 	void				vaciaColaEspera();
-<<<<<<< HEAD
 
-=======
-	
->>>>>>> 5e88b6028652a430d470ed90f912b968540161cc
 public:
 	Planner();
 	Planner(uint32&&, uint32&&);

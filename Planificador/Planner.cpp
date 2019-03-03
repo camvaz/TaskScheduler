@@ -307,11 +307,7 @@ void Planner::ejecutaMultiTarea2daVuelta(uint32& at, uint32 &alg)
 			}
 		}
 	}
-<<<<<<< HEAD
 	eliminaCerosMultitarea(at + 1);
-=======
-	eliminaCerosMultitarea(at+1);
->>>>>>> 5e88b6028652a430d470ed90f912b968540161cc
 
 	for (vector<Proceso>::iterator i = container.begin(); i < container.end(); ++i) {
 		Lista.erase(remove_if(Lista.begin(), Lista.end(), [i](Proceso x) {
@@ -381,7 +377,6 @@ void Planner::agregaLista(uint32 &i)
 }
 
 void Planner::agregaColaEspera(uint32 &opc)
-<<<<<<< HEAD
 {
 	for (size_t i = 0; i < size_t(canales); ++i) {
 		if (i < Lista.size()) {
@@ -396,21 +391,6 @@ void Planner::agregaColaEspera(uint32 &opc)
 void Planner::runMonotarea(uint32 &Alg)
 {
 	string filename;
-=======
-{
-	for (size_t i = 0; i<size_t(canales); ++i) {
-		if (i < Lista.size()) {
-			this->ColaEspera.insert(ColaEspera.end(), Lista[i]);
-		}
-	}
-	
-
-	eligeOrdenamientoCola(opc);
-}
-
-void Planner::runMonotarea(uint32 &Alg)
-{
->>>>>>> 5e88b6028652a430d470ed90f912b968540161cc
 	uint32 uExe = 0;
 	size_t ct = 0;
 	while (keepExecuting()) {
@@ -425,17 +405,10 @@ void Planner::runMonotarea(uint32 &Alg)
 			if (Lista.size() > 0) {
 				if (ListaAEjecutar.size() > 0) {
 					ct = 0;
-<<<<<<< HEAD
 					while (ListaAEjecutar.size() < size_t(canales) && (size_t(ct) < ListaAEjecutar.size() && size_t(ct) < Lista.size())) {
 						if (Lista[ct] == ListaAEjecutar[ct]) {
 							++ct;
 							if (ct < Lista.size())
-=======
-					while(ListaAEjecutar.size() < size_t(canales) && (size_t(ct) < ListaAEjecutar.size() && size_t(ct) < Lista.size())) {
-						if (Lista[ct] == ListaAEjecutar[ct]) {
-							++ct;
-							if(ct <Lista.size())
->>>>>>> 5e88b6028652a430d470ed90f912b968540161cc
 								this->ListaAEjecutar.insert(ListaAEjecutar.end(), Lista[ct]);
 						}
 						else {
@@ -453,11 +426,7 @@ void Planner::runMonotarea(uint32 &Alg)
 					}
 				}
 			}
-<<<<<<< HEAD
 		}
-=======
-		} 
->>>>>>> 5e88b6028652a430d470ed90f912b968540161cc
 		ejecutaMonoTarea();
 		++uExe;
 	}
@@ -520,36 +489,21 @@ void Planner::runMultitarea(uint32 &Alg)
 			printColaEspera();
 			agregaLista(uExe);
 			eligeOrdenamientoLista(Alg);
-<<<<<<< HEAD
 
 			if (Lista.size() > 0) {
 				ejecutaMultiTarea();
 				eliminaCerosMultitarea(uExe + 1);
-=======
-			
-			if(Lista.size()>0){
-				ejecutaMultiTarea();
-				eliminaCerosMultitarea(uExe+1);
->>>>>>> 5e88b6028652a430d470ed90f912b968540161cc
 				agregaColaEspera(Alg);
 			}
 			else {
 				if (ColaEspera.size() > 0) {
 					vaciaColaEspera();
 					ejecutaMultiTarea();
-<<<<<<< HEAD
 					eliminaCerosMultitarea(uExe + 1);
 					agregaColaEspera(Alg);
 				}
 			}
 
-=======
-					eliminaCerosMultitarea(uExe+1);
-					agregaColaEspera(Alg);
-				}
-			}
-				
->>>>>>> 5e88b6028652a430d470ed90f912b968540161cc
 			for (vector<Proceso>::iterator i = Tabla.begin(); i != Tabla.end(); ++i) {
 				if (i->getUejecucion() != i->getTExe()) {
 					pVuelta = true;
@@ -559,7 +513,6 @@ void Planner::runMultitarea(uint32 &Alg)
 					break;
 				}
 			}
-<<<<<<< HEAD
 
 			Lista.erase(remove_if(Lista.begin(), Lista.end(), [](Proceso x) {
 				return x.getUejecucion() != x.getTExe();
@@ -581,29 +534,6 @@ void Planner::runMultitarea(uint32 &Alg)
 				vaciaColaEspera();
 
 			ejecutaMultiTarea2daVuelta(uExe, Alg);
-=======
-
-			Lista.erase(remove_if(Lista.begin(), Lista.end(), [](Proceso x) {
-				return x.getUejecucion() != x.getTExe();
-			}), Lista.end());
-
-			++uExe;
-		}
-		else {
-			cout << "Unidad de vuelta n: " << uExe << endl << endl;
-			cout << "\nTabla:\n";
-			printTabla();
-			cout << "\nLista:" << endl;
-			printLista();
-			cout << "\nCola:\n";
-			printColaEspera();
-
-			
-			if (Lista.size() == 0)
-				vaciaColaEspera();
-
-			ejecutaMultiTarea2daVuelta(uExe,Alg);
->>>>>>> 5e88b6028652a430d470ed90f912b968540161cc
 			++uExe;
 		}
 	}

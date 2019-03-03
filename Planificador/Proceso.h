@@ -36,9 +36,6 @@ public:
 	void agregaTiempoFinal(uint32&);
 	void setTiempoEspera();
 	void pVueltaSuccess();
-<<<<<<< HEAD
 	friend class Planner;
-=======
->>>>>>> 5e88b6028652a430d470ed90f912b968540161cc
 	~Proceso();
 };
