@@ -12,17 +12,21 @@ Planificador de Tareas.
 #include "pch.h"
 #include <iostream>
 
+using std::numeric_limits;
 void ClearScreen();
 
 int main()
 {
 	vector<Proceso> procesos;
 	vector<int>estructuraDatos;
+	vector<char>data;
+
+	int i = 0;
 	uint32 Algoritmo, canales;
 	Proceso temp;
 	Planner planificador;
-	string filename;
-	char opc, dato;
+	string filename, tempString="";
+	char opc, dato, num;
 	ifstream archivo;
 	bool SHUTDOWN = false;
 
@@ -40,15 +44,31 @@ int main()
 		else {
 			while (!archivo.eof()) {
 				archivo.get(dato);
-				if (int(dato) > 47 && int(dato) < 58) {
-					estructuraDatos.push_back(atoi(&dato));
-					cout << atoi(&dato) << endl;
+				if (isdigit(dato)) {
+					tempString += dato;
+					cout << "tempstring " << tempString << '\n';
+					archivo.get(num);
+					if (isdigit(num)) {
+						tempString += num;
+						cout << "tempstring "<<tempString << '\n';
+						estructuraDatos.push_back(atoi(tempString.c_str()));
+						cout << estructuraDatos.size()<<'\n';
+						tempString.clear();
+					}
+					else {
+						estructuraDatos.push_back(atoi(&dato));
+						tempString.clear();
+					}
+					cout << atoi(&num);
 				}
-				else if (dato == '\n') {
-					temp.setObject(uint32(estructuraDatos[0]), uint32(estructuraDatos[1]), uint32(estructuraDatos[2]), uint32(estructuraDatos[3]));
-					temp.print();
-					planificador.addProceso(temp);
-					estructuraDatos.clear();
+				else if (dato == 'n' || dato == '\n') {
+					if (estructuraDatos.size() > 0) {
+						temp.setObject(uint32(estructuraDatos[0]), uint32(estructuraDatos[1]), uint32(estructuraDatos[2]), uint32(estructuraDatos[3]));
+						temp.print();
+						planificador.addProceso(temp);
+						estructuraDatos.clear();
+					}
+					
 				}
 			}
 			archivo.close();

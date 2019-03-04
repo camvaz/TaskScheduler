@@ -10,6 +10,8 @@
 #define PCH_H
 
 #include <iostream>
+#include <ctype.h>
+#include <limits>
 #include <algorithm>
 #include <vector>
 #include <fstream>
