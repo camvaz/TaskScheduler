@@ -1,3 +1,13 @@
+/*Planificador de Tareas. 
+	Administracion de Sistemas Operativos.
+	Profesor: M.C. Josue Perez Lucero.
+	Integrantes: Campos Vazquez Victor Manuel
+					Perez Montiel Daniel
+	
+	Facultad de Ciencias de la Computacion. Benemerita Universidad Autonoma de Puebla.
+*/
+
+
 #include "pch.h"
 #include <iostream>
 
