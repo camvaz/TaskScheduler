@@ -1,4 +1,5 @@
-/*Planificador de Tareas. 
+/*
+Planificador de Tareas. 
 	Administracion de Sistemas Operativos.
 	Profesor: M.C. Josue Perez Lucero.
 	Integrantes: Campos Vazquez Victor Manuel
@@ -39,7 +40,7 @@ int main()
 		else {
 			while (!archivo.eof()) {
 				archivo.get(dato);
-				if (dato != '\n' && dato != '\t') {
+				if (int(dato) > 47 && int(dato) < 58) {
 					estructuraDatos.push_back(atoi(&dato));
 				}
 				else if (dato == '\n') {
