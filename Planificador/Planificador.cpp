@@ -5,26 +5,41 @@ void ClearScreen();
 
 int main()
 {
+	vector<Proceso> procesos;
+	vector<int>estructuraDatos;
 	uint32 Algoritmo, canales;
 	Proceso temp;
 	Planner planificador;
 	string filename;
-	char opc;
+	char opc, dato;
 	ifstream archivo;
 	bool SHUTDOWN = false;
 
 	while (!SHUTDOWN) {
-
 		cout << "\tPlanificador de tareas.\n";
 		cout << "Materia: Administracion de Sistemas Operativos.\nProfesor: M.C. Josue Perez Lucero\nIntegrantes:\n\tCampos Vazquez Victor Manuel.\n\tPerez Montiel Daniel.\n\n\n";
 		cout << "Favor de introducir el nombre del archivo a continuacion: \n$ ";
 		getline(cin, filename);
-		archivo.open("H:/ASO/Proyecto1/Procesos/" + filename + ".txt", ios::binary);
+		archivo.open("H:/ASO/Proyecto1/Procesos/" + filename + ".txt" ,ios::binary);
 
 		if (!(archivo.is_open())) {
 			cout << "Error: El archivo no puede ser abierto.";
+			SHUTDOWN = true;
 		}
 		else {
+			while (!archivo.eof()) {
+				archivo.get(dato);
+				if (dato != '\n' && dato != '\t') {
+					estructuraDatos.push_back(atoi(&dato));
+				}
+				else if (dato == '\n') {
+					temp.setObject(uint32(estructuraDatos[0]), uint32(estructuraDatos[1]), uint32(estructuraDatos[2]), uint32(estructuraDatos[3]));
+					temp.print();
+					planificador.addProceso(temp);
+					estructuraDatos.clear();
+				}
+			}
+			archivo.close();
 			cout << "\n\nArchivo leido. Introduce la cantidad de canales:\n$ ";
 			cin >> canales;
 
@@ -41,7 +56,7 @@ int main()
 
 			switch (opc) {
 			case 'a':
-				cout << "\nSelecciona Algoritmo: \n 1: PEASC \n 2: EPASC \n 3:PEDESC \n 4:EPDESC \n\n";
+				cout << "\nSelecciona Algoritmo: \n 1: PEASC \n 2: EPASC \n 3:PEDESC \n 4:EPDESC \n\n$";
 				cin >> opc;
 				cin.ignore();
 				switch (opc) {
@@ -112,7 +127,7 @@ int main()
 				break;
 
 			case 'b':
-				cout << "\nSelecciona Algoritmo: \n 1: PEASC \n 2: EPASC \n 3:PEDESC \n 4:EPDESC \n\n";
+				cout << "\nSelecciona Algoritmo: \n 1: PEASC \n 2: EPASC \n 3:PEDESC \n 4:EPDESC \n\n$";
 				cin >> opc;
 				cin.ignore();
 				switch (opc) {
