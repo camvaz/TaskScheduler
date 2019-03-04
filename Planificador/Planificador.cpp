@@ -42,6 +42,7 @@ int main()
 				archivo.get(dato);
 				if (int(dato) > 47 && int(dato) < 58) {
 					estructuraDatos.push_back(atoi(&dato));
+					cout << atoi(&dato) << endl;
 				}
 				else if (dato == '\n') {
 					temp.setObject(uint32(estructuraDatos[0]), uint32(estructuraDatos[1]), uint32(estructuraDatos[2]), uint32(estructuraDatos[3]));
