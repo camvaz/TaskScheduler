@@ -14,6 +14,7 @@
 #include <vector>
 #include <fstream>
 #include <string>
+#include "windows.h"
 #include "Proceso.h"
 #include "Planner.h"
 // TODO: add headers that you want to pre-compile here

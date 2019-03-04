@@ -2,11 +2,9 @@
 #include "Planner.h"
 
 
-Planner::Planner()
+Planner::Planner() : contador(0), numProcesos(0), canales(0), esperaTotal(0)
 {
-	contador = 0;
-	numProcesos = 0;
-	canales = 0;
+
 }
 
 Planner::Planner(uint32 &&size, uint32&& newCanales) : numProcesos(size), canales(newCanales)
@@ -69,12 +67,19 @@ void Planner::printColaEspera()
 	}
 }
 
+void Planner::setCanales(uint32 &x)
+{
+	this->canales = x;
+}
+
 void Planner::reboot()
 {
 	Lista.clear();
 	Tabla.clear();
 	ListaAEjecutar.clear();
 	ColaEspera.clear();
+
+	esperaTotal = 0;
 	canales = 0;
 	numProcesos = 0;
 	contador = 0;
